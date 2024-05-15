@@ -5,15 +5,18 @@ import { SelectListItems } from './SelectListItems.tsx';
 
 interface SelectProps {
   items: SelectItem[];
+  onChange: (item: SelectItem)=>void
 }
 
 export const Select: FC<SelectProps> = ({
-  items
+  items,
+  onChange
 }) => {
   const [selectedValue, setSelectedValue] = useState<SelectItem | SelectItem[]>();
   const [opened, setOpened] = useState<boolean>(false);
 
   const onSelectedValue = (v: SelectItem) => {
+    onChange(v);
     setSelectedValue(v);
     setOpened(false);
   }

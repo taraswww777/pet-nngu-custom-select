@@ -10,5 +10,16 @@ export const CustomSelectPage = () => {
     { id: 4, caption: 'четыре' }
   ];
 
-  return (<Select items={items} />)
+  const onChange = (item: SelectItem) => {
+    console.log('item:', item)
+  }
+
+
+  return (<Select items={items} onChange={onChange} />)
 }
+/**
+ * 1. CustomSelectPage - Бизнес логика
+ * 2. Select - Сам выпадающий список
+ * 3. SelectListItems - Элементы списка
+ * 4. caption - отображение элемента
+ */
