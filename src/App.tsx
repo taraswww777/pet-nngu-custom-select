@@ -1,16 +1,26 @@
-import ogDefaultImage from './assets/og-default-image.png'
 import { store } from './store'
 import { Provider } from 'react-redux'
-import { Select } from './ui/Select/Select.tsx';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { HomePage } from './pages/HomePage.tsx';
+import { CustomSelectPage } from './pages/CustomSelectPage.tsx';
+import { Menu } from './components/Menu.tsx';
 
 export function App() {
   return (
     <Provider store={store}>
-      <div className="flex flex-col items-center justify-center w-full h-lvh">
-        <h1 className="text-6xl text-red-600 p-10">pet-nngu-custom-select</h1>
-        <img src={ogDefaultImage} className="ogDefaultImage" alt="ogDefaultImage" />
-        <Select />
-      </div>
+      <BrowserRouter>
+        <div className="flex flex-wrap bg-white">
+          <nav className="mt-4 w-full bg-blue-500">
+            <Menu />
+          </nav>
+          <div className="mt-4 w-full">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="custom-select" element={<CustomSelectPage />} />
+            </Routes>
+          </div>
+        </div>
+      </BrowserRouter>
     </Provider>
   )
 }
