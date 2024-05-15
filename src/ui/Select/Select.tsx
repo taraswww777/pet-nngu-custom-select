@@ -1,23 +1,34 @@
-import { ReactNode, useState } from 'react';
+import { FC, useState } from 'react';
 import { isArray } from 'lodash'
+import { SelectItem } from './Select.types.ts';
+import { SelectListItems } from './SelectListItems.tsx';
 
-interface Item {
-  id: string | number,
-  caption: ReactNode,
+interface SelectProps {
+  items: SelectItem[];
+  onChange: (item: SelectItem)=>void
 }
 
-export const Select = () => {
-  const [selectedValue, setSelectedValue] = useState<Item | Item[]>();
+export const Select: FC<SelectProps> = ({
+  items,
+  onChange
+}) => {
+  const [selectedValue, setSelectedValue] = useState<SelectItem | SelectItem[]>();
+  const [opened, setOpened] = useState<boolean>(false);
 
-  const items = [
-    { id: 1, caption: 'one' },
-    { id: 2, caption: 'two' },
-    { id: 3, caption: 'tree' }
-  ];
+  const onSelectedValue = (v: SelectItem) => {
+    onChange(v);
+    setSelectedValue(v);
+    setOpened(false);
+  }
 
   return (
     <div className="text-2xl uppercase min-w-32">
-      <button className="w-full border-2 border-black">
+      <button
+        className="w-full border-2 border-black"
+        onClick={() => {
+          setOpened(true);
+        }}
+      >
         {isArray(selectedValue) ? (
           <ul>
             {selectedValue.map(({ caption, id }) => (
@@ -34,17 +45,11 @@ export const Select = () => {
           </div>
         )}
       </button>
-      <ul className="w-full flex flex-wrap justify-center">
-        {items.map((item) => (
-          <li
-            key={item.id}
-            className="w-full hover:bg-gray-100 py-2 px-2 bg-gray-400"
-            onClick={() => {
-              setSelectedValue(item);
-            }}
-          >{item.caption}</li>
-        ))}
-      </ul>
+
+      {opened && (
+        <SelectListItems items={items}
+                         onSelectedValue={onSelectedValue} />
+      )}
     </div>
   )
 }
