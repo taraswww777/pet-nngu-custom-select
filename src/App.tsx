@@ -10,7 +10,7 @@ export function App() {
     <Provider store={store}>
       <BrowserRouter>
         <div className="flex flex-wrap bg-white">
-          <nav className="mt-4 w-full bg-blue-500">
+          <nav className="mt-4 w-full">
             <Menu />
           </nav>
           <div className="mt-4 w-full">
